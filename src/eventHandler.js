@@ -30,8 +30,6 @@ const handleMessage4Bot = async (event) => {
     let startTime = null;
     let endTime = null;
 
-    console.log(info);
-
     const team = message.mentions.pop();
 
     if (text.includes('lunch') && text.includes('now')) {
@@ -57,7 +55,8 @@ const handleMessage4Bot = async (event) => {
     let res = await createEvent(event, obj, team);
     console.log(res.data.id);
     await bot.sendMessage(group.id, {
-        text: 'sent',
+        text:
+            'Here is your lunch event. You can edit it if times change and it will be updated globally.',
         attachments: [
             {
                 id: res.data.id,
