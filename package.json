@@ -1,5 +1,5 @@
 {
-    "name": "ringcentral-bot-template",
+    "name": "rc-lunch-bot",
     "version": "1.0.0",
     "main": "express.js",
     "scripts": {
