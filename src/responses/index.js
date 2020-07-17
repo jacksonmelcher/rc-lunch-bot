@@ -1,0 +1,1 @@
+export { joinedGroup } from './joinedGroup';
