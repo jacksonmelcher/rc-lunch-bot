@@ -26,9 +26,7 @@ const handleMessage4Bot = async (event) => {
 
     if (text.includes('help')) {
         await bot.sendMessage(group.id, joinedGroup);
-    }
-
-    if (!message.mentions) {
+    } else if (!message.mentions) {
         await bot.sendMessage(group.id, {
             text: 'Please mention a team I can send the event to.',
         });
