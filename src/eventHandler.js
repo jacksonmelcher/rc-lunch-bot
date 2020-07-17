@@ -53,7 +53,7 @@ const handleMessage4Bot = async (event) => {
         allDay: false,
     };
     let res = await createEvent(event, obj, team);
-    console.log(res.data.id);
+    // console.log(res.data.id);
     await bot.sendMessage(group.id, {
         text:
             'Here is your lunch event. You can edit it if times change and it will be updated globally.',
