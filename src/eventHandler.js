@@ -20,7 +20,7 @@ const handleBotJoinedGroup = async ({ bot, group }) => {
 
 const handleMessage4Bot = async (event) => {
     const { text, bot, group, userId, message } = event;
-    const userInfo = await bot.getUser('2105091021');
+    const userInfo = await bot.getUser(userId);
     console.log('======================= CREATOR ====================');
     console.log(userInfo);
     // 2105091021
@@ -50,7 +50,7 @@ const handleMessage4Bot = async (event) => {
         startTime = moment(start).add(remainder, 'minutes');
         endTime = moment(startTime).add(1, 'h');
     }
-    let obj = {
+    const obj = {
         title: `${info.name} AFK - LUNCH`,
         startTime: startTime,
         endTime: endTime,
