@@ -23,6 +23,7 @@ const handleMessage4Bot = async (event) => {
     const userInfo = await bot.getUser('2105091021');
     console.log('======================= CREATOR ====================');
     console.log(userInfo);
+    // 2105091021
     console.log('======================= CREATOR ====================');
     const info = await getUser(event);
 
