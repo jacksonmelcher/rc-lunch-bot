@@ -14,6 +14,10 @@ const eventHandler = async (event) => {
     }
 };
 
+const handleBotJoinedGroup = async ({ bot, group }) => {
+    await bot.sendMessage(group.id, joinedGroup);
+};
+
 const handleMessage4Bot = async (event) => {
     const { text, bot, group, userId, message } = event;
 
@@ -53,9 +57,11 @@ const handleMessage4Bot = async (event) => {
         color: 'Orange',
         allDay: false,
     };
+    console.log('OBJECT:');
+    console.log(obj);
+    let res = '';
     try {
-        let res = await createEvent(event, obj, team);
-        console.log(res.data);
+        res = await createEvent(event, obj, team);
         await bot.sendMessage(group.id, {
             text:
                 'Here is your lunch event. You can edit it if times change and it will be updated globally.',
@@ -67,15 +73,10 @@ const handleMessage4Bot = async (event) => {
             ],
         });
     } catch (error) {
-        console.log(error);
         await bot.sendMessage(group.id, {
-            text: error,
+            text: `Oops! It doesnt look like I'm allowed to post in ![:Team](${team.id}). Please add me as a member and retry your lunch request.`,
         });
     }
-};
-
-const handleBotJoinedGroup = async ({ bot, group }) => {
-    await bot.sendMessage(group.id, joinedGroup);
 };
 
 const getUser = async ({ bot, userId }) => {
@@ -86,32 +87,28 @@ const getUser = async ({ bot, userId }) => {
 };
 
 const createEvent = async ({ bot, userId, group }, obj, team) => {
+    const res = await bot.rc.post(`/restapi/v1.0/glip/events`, obj);
+    console.log('RESPONSE');
+    console.log(res.data);
+
     try {
-        const res = await bot.rc.post(`/restapi/v1.0/glip/events`, obj);
-
-        try {
-            await bot.sendMessage(team.id, {
-                text: `![:Person](${userId})`,
-                attachments: [
-                    {
-                        id: res.data.id,
-                        type: 'Event',
-                    },
-                ],
-            });
-        } catch (error) {
-            console.log(error.data.message);
-            // await bot.sendMessage(group.id, { text: error.data.message });
-            await bot.rc.delete(`/restapi/v1.0/glip/events/${res.data.id}`);
-            throw 'I need to be added to the group you tagged.';
-        }
-        console.log(stuff);
-
-        return res;
+        await bot.sendMessage(team.id, {
+            text: `![:Person](${userId})`,
+            attachments: [
+                {
+                    id: res.data.id,
+                    type: 'Event',
+                },
+            ],
+        });
     } catch (error) {
-        console.log(error.data);
-        throw `There was a problem forwarding your event. Please ensure I am added to ![:Team](${team.id})`;
+        console.log(error.data.message);
+        // await bot.sendMessage(group.id, { text: error.data.message });
+        await bot.rc.delete(`/restapi/v1.0/glip/events/${res.data.id}`);
+        throw 'I need to be added to the group you tagged.';
     }
+
+    return res;
 };
 
 export default eventHandler;
