@@ -61,7 +61,7 @@ const handleMessage4Bot = async (event) => {
         color: 'Orange',
         allDay: false,
     };
-    console.log('OBJECT:');
+    console.log('OBJECT CREATOR ID:');
     console.log(obj.creatorId);
     let res = '';
     try {
