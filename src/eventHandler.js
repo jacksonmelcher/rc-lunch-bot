@@ -22,7 +22,7 @@ const handleMessage4Bot = async (event) => {
     const { text, bot, group, userId, message } = event;
     const userInfo = await bot.getUser(userId);
     console.log('======================= CREATOR ====================');
-    console.log(userInfo.rc.id);
+    console.log(userInfo.rc);
     const info = await getUser(event);
 
     let start = null;
