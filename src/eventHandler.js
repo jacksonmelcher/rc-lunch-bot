@@ -71,7 +71,7 @@ const handleMessage4Bot = async (event) => {
         res = await createEvent(event, obj, team);
         console.log(res.data);
         await bot.sendMessage(group.id, {
-            text: 'Here is your lunch event. It will be sent to ',
+            text: `Here is your lunch event. It will be sent to ![:Team](${team.id}).`,
             attachments: [
                 {
                     id: res.data.id,
