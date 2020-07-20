@@ -21,10 +21,12 @@ const handleBotJoinedGroup = async ({ bot, group }) => {
 const handleMessage4Bot = async (event) => {
     const { text, bot, group, userId, message } = event;
     const userInfo = await bot.getUser(userId);
-    console.log('======================= CREATOR ====================');
-    console.log(userInfo);
-    // 2105091021
-    console.log('======================= CREATOR ====================');
+    console.log(
+        '======================= USER ID FROM bot.getUser() ===================='
+    );
+    console.log(userInfo.rc);
+
+    console.log('=======================  ====================');
     const info = await getUser(event);
     const creatorId = userInfo.rc.id;
     let start = null;
@@ -61,8 +63,9 @@ const handleMessage4Bot = async (event) => {
         color: 'Orange',
         allDay: false,
     };
-    console.log('OBJECT CREATOR ID:');
-    console.log(obj.creatorId);
+    console.log('Event CREATOR ID:');
+    console.log(obj);
+
     let res = '';
     try {
         res = await createEvent(event, obj, team);
@@ -93,7 +96,7 @@ const getUser = async ({ bot, userId }) => {
 const createEvent = async ({ bot, userId, group }, obj, team) => {
     const res = await bot.rc.post(`/restapi/v1.0/glip/events`, obj);
     console.log('Created event');
-    console.log('==================RESPONSE===============');
+    console.log('==================RESPONSE FROM /glip/events===============');
     console.log(res.data);
     console.log('==================RESPONSE===============');
     try {
