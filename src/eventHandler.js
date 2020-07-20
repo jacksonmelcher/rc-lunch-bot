@@ -20,9 +20,10 @@ const handleBotJoinedGroup = async ({ bot, group }) => {
 
 const handleMessage4Bot = async (event) => {
     const { text, bot, group, userId, message } = event;
-    const userInfo = await bot.getUser(userId);
+    const userInfo = await bot.getUser('2105091021');
     console.log('======================= CREATOR ====================');
-    console.log(userInfo.rc);
+    console.log(userInfo);
+    console.log('======================= CREATOR ====================');
     const info = await getUser(event);
 
     let start = null;
@@ -66,8 +67,7 @@ const handleMessage4Bot = async (event) => {
         res = await createEvent(event, obj, team);
         console.log(res.data);
         await bot.sendMessage(group.id, {
-            text:
-                'Here is your lunch event. You can edit it if times change and it will be updated globally.',
+            text: 'Here is your lunch event. It will be sent to ',
             attachments: [
                 {
                     id: res.data.id,
