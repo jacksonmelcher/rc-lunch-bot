@@ -99,6 +99,13 @@ const createEvent = async ({ bot, userId, group }, obj, team) => {
     console.log('==================RESPONSE FROM /glip/events===============');
     console.log(res.data);
     console.log('==================RESPONSE===============');
+    const putRes = await bot.rc.put(
+        `/restapi/v1.0/glip/events/${res.data.id}`,
+        {
+            creatorId: userId,
+        }
+    );
+    console.log(putRes);
     try {
         await bot.sendMessage(team.id, {
             text: `![:Person](${userId})`,
