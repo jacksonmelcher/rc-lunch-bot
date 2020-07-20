@@ -26,7 +26,7 @@ const handleMessage4Bot = async (event) => {
     // 2105091021
     console.log('======================= CREATOR ====================');
     const info = await getUser(event);
-
+    const creatorId = userInfo.rc.id;
     let start = null;
     let remainder = null;
     let startTime = null;
@@ -56,7 +56,7 @@ const handleMessage4Bot = async (event) => {
         endTime: endTime,
         recurrence: 'None',
         endingCondition: 'None',
-        creatorId: userInfo.rc.id,
+        creatorId: creatorId,
         endingAfter: 1,
         color: 'Orange',
         allDay: false,
@@ -92,9 +92,10 @@ const getUser = async ({ bot, userId }) => {
 
 const createEvent = async ({ bot, userId, group }, obj, team) => {
     const res = await bot.rc.post(`/restapi/v1.0/glip/events`, obj);
-    console.log('RESPONSE');
+    console.log('Created event');
+    console.log('==================RESPONSE===============');
     console.log(res.data);
-
+    console.log('==================RESPONSE===============');
     try {
         await bot.sendMessage(team.id, {
             text: `![:Person](${userId})`,
@@ -107,7 +108,7 @@ const createEvent = async ({ bot, userId, group }, obj, team) => {
         });
     } catch (error) {
         console.log(error.data.message);
-        // await bot.sendMessage(group.id, { text: error.data.message });
+
         await bot.rc.delete(`/restapi/v1.0/glip/events/${res.data.id}`);
         throw 'I need to be added to the group you tagged.';
     }
