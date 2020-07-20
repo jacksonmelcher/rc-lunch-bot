@@ -20,9 +20,9 @@ const handleBotJoinedGroup = async ({ bot, group }) => {
 
 const handleMessage4Bot = async (event) => {
     const { text, bot, group, userId, message } = event;
-    const CREATOR = await bot.getUser(userId);
+    const userInfo = await bot.getUser(userId);
     console.log('======================= CREATOR ====================');
-    console.log(CREATOR);
+    console.log(userInfo.rc.id);
     const info = await getUser(event);
 
     let start = null;
@@ -54,7 +54,7 @@ const handleMessage4Bot = async (event) => {
         endTime: endTime,
         recurrence: 'None',
         endingCondition: 'None',
-        creatorId: userId,
+        creatorId: userInfo.rc.id,
         endingAfter: 1,
         color: 'Orange',
         allDay: false,
