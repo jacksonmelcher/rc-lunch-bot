@@ -20,7 +20,9 @@ const handleBotJoinedGroup = async ({ bot, group }) => {
 
 const handleMessage4Bot = async (event) => {
     const { text, bot, group, userId, message } = event;
-
+    const CREATOR = await bot.getUser(userId);
+    console.log('======================= CREATOR ====================');
+    console.log(CREATOR);
     const info = await getUser(event);
 
     let start = null;
@@ -58,7 +60,7 @@ const handleMessage4Bot = async (event) => {
         allDay: false,
     };
     console.log('OBJECT:');
-    console.log(obj);
+    console.log(obj.creatorId);
     let res = '';
     try {
         res = await createEvent(event, obj, team);
